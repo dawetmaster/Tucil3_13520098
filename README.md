@@ -1,1 +1,1 @@
-# bnb-16puzzle
+# Branch and Bound in 16-Puzzle Problem
