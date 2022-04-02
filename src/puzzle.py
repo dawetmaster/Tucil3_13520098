@@ -154,47 +154,58 @@ class Puzzle:
         self.steps += 1
         self.last_move = Moves.RIGHT
 
-    # function count_all_smaller is defined
-    # as how many tiles with smaller value than itself
-    # that placed after itself
-    def count_all_smaller(self, number):
-        "Counts all tiles with smaller value than itself"
+    # function count_all_smaller
+    # returns number of tiles whose number is smaller than given number
+    # process is done traversally from first element to last element
+    # complexity is O(n**2)
+    def count_all_smaller(self):
+        # flatten the whole puzzle
+        flat_puzzle = self.puzzle.flatten()
+        # for each pass, get tile number from current element
+        # and count number of tiles whose number is smaller than it
+        # that placed after the current element
+        count = 0
+        for i in range(len(flat_puzzle)):
+            for j in range(i + 1, len(flat_puzzle)):
+                if flat_puzzle[i] > flat_puzzle[j]:
+                    count += 1
+        return count
+
+    # function tile_16_estimate
+    # returns (row + col) mod 2 of tile numbered 16
+    # just get the position of tile numbered 16
+    def tile_16_estimate(self):
+        pos_16 = self.get_tile_position(16)
+        return (pos_16.get_row() + pos_16.get_col()) % 2
+
+    def get_solvable_estimate(self):
+        "Returns heuristic cost"
+
+        return self.count_all_smaller() + self.tile_16_estimate()
+
+    def is_solvable(self):
+        "Checks if puzzle is solvable"
+
+        return self.get_solvable_estimate() % 2 == 0
+
+    def get_solvable_message(self):
+        "Returns solvable message"
+
+        if self.is_solvable():
+            return "Solvable"
+        else:
+            return "Not solvable"
+
+    # Heuristic cost is defined of how many tiles displaced from goal state
+    def get_heuristic_cost(self):
+        "Returns heuristic cost"
 
         count = 0
-        # treat puzzle as one long array
-        puzzle_array = self.puzzle.flatten()
-        # get position of tile that contains specified number
-        pos = puzzle_array.tolist().index(number)
-        # from that position to the end of array
-        # count how many tiles with smaller value than itself
-        for i in range(pos, len(puzzle_array)):
-            if puzzle_array[i] < number:
+        flat_puzzle = self.puzzle.flatten()
+        for i in range(len(flat_puzzle)):
+            if flat_puzzle[i] != BASE_ARRAY.flatten()[i]:
                 count += 1
         return count
 
-    # then, apply it to all 16 tiles in the puzzle
-    # based on function count_all_smaller
-    def get_count_all_smaller(self):
-        "Counts all tiles with smaller value than itself"
-
-        count = 0
-        for i in range(1, 16):
-            count += self.count_all_smaller(i)
-        return count
-    
-    # tile with number 16 also have impact of heuristic cost
-    # so, we need to calculate value of position of tile 16
-    # tile 16 position is defined by (row, col)
-    # return 1 if (row + col) is odd, otherwise 0
-    def get_tile_16_heuristic_cost(self):
-        "Returns heuristic cost of tile 16"
-
-        pos = self.get_tile_position(16)
-        return 1 if (pos.get_row() + pos.get_col()) % 2 == 1 else 0
-
-    # then, we need to calculate heuristic cost of puzzle
-    # by summing up heuristic cost of all tiles
-    def get_heuristic_cost(self):
-        "Returns heuristic cost of puzzle"
-
-        return self.get_count_all_smaller() + self.get_tile_16_heuristic_cost()
+    def get_total_cost(self):
+        return self.steps + self.get_heuristic_cost()
