@@ -9,14 +9,25 @@ class PuzzleNode:
     # private puzzle: Puzzle
     # private parent: PuzzleNode
     # private children: list of PuzzleNode
+    # private id: int (unique)
+
+    # STATIC VALUE
+    node_count = 0
 
     # CONSTRUCTORS
     def __init__(self, puzzle=Puzzle(), parent=None, children=[]):
         self.puzzle = puzzle
         self.parent = parent
         self.children = children
+        self.id = PuzzleNode.apply_id()
 
     # METHODS
+    def apply_id():
+        "Applies id"
+
+        PuzzleNode.node_count += 1
+        return PuzzleNode.node_count
+
     def get_puzzle(self):
         "Returns puzzle"
 
@@ -47,6 +58,7 @@ class PuzzleNode:
         "Prints puzzle"
 
         self.puzzle.print()
+        print("Puzzle ID: " + str(self.id))
         print("Parent: " + str(self.parent))
         print("Children: " + str(self.children))
         print("Last move: " + str(self.puzzle.get_last_move()))
@@ -56,6 +68,8 @@ class PuzzleNode:
 
         return (
             self.puzzle.get_printed_text()
+            + "\nPuzzle ID: "
+            + str(self.id)
             + "\nParent: "
             + str(self.parent)
             + "\nChildren: "
