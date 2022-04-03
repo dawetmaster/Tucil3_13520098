@@ -50,3 +50,16 @@ class PuzzleNode:
         print("Parent: " + str(self.parent))
         print("Children: " + str(self.children))
         print("Last move: " + str(self.puzzle.get_last_move()))
+
+    def get_printed_text(self):
+        "Returns printed text"
+
+        return (
+            self.puzzle.get_printed_text()
+            + "\nParent: "
+            + str(self.parent)
+            + "\nChildren: "
+            + str(self.children)
+            + "\nLast move: "
+            + str(self.puzzle.get_last_move())
+            )

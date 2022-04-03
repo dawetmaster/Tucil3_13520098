@@ -2,6 +2,8 @@ from puzzle import Puzzle
 from puzzlenode import PuzzleNode
 from collections import deque
 import search
+import time
+import menu
 
 
 def make_base_puzzle(pz_array):
@@ -66,13 +68,19 @@ def print_solution(solution):
     step = 0
     # print solution
     print("Solution:")
+    # assume logging is enabled
+    log = "Solution:\n"
     while solution:
         node = solution.pop()
         print("Step " + str(step))
+        log += "Step " + str(step) + "\n"
         node.print()
+        log += node.get_printed_text()
         print()
         step += 1
     print("** End of solution **")
+    log += "\n** End of solution **"
+    return log
 
 
 def main(pz_array):
@@ -112,8 +120,44 @@ def main(pz_array):
     # otherwise print termination message
     # then terminate the search process
     if check_solvable(base_tree.puzzle):
-        solution = get_solution(base_tree)
-        print_solution(solution)
+        # start calculating execution time
+        start_time = time.time()
+        solution, node_count = get_solution(base_tree)
+        # end calculating execution time
+        end_time = time.time()
+        solution_log = print_solution(solution)
+        print("Number of nodes (Simpul dibangkitkan): " + str(node_count))
+        solution_log += "\nNumber of nodes (Simpul dibangkitkan): " + str(node_count)
+        # print execution time
+        print("Execution time: " + str(end_time - start_time) + " seconds")
+        solution_log += "\nExecution time: " + str(end_time - start_time) + " seconds"
+        # Enable logging prompt question
+        print("Do you want to save the solution to a file? (Y/n)")
+        while True:
+            # get input
+            input_str = input()
+            # if input is Y or y
+            if input_str.lower() == "y" or input_str.lower() == "":
+                # insert file name dialog
+                filename = menu.insert_file_name_dialog()
+                # default file name is result.txt if filename is empty
+                if filename == "":
+                    filename = "result.txt"
+                # write solution to file
+                with open(filename, "w") as f:
+                    f.write(solution_log)
+                # print termination message
+                print("Solution saved to " + filename)
+                # break
+                break
+            # if input is n or N
+            elif input_str.lower() == "n":
+                # break
+                break
+            # if input is not Y or y or n or N
+            else:
+                # print error
+                print("Error: invalid input")
     else:
         print("Termination message:")
         print("This puzzle is not solvable")

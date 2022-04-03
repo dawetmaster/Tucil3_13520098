@@ -24,6 +24,8 @@ def get_solution_stack(base_tree):
     queue = PuzzlePrioQueue()
     queue.add(base_tree)
 
+    node_count = 1
+
     # 3. while queue is not empty:
     while not queue.is_empty():
         # 4.   poll the first node from the queue
@@ -48,7 +50,7 @@ def get_solution_stack(base_tree):
                 node = node.parent
 
             # 6f. return solution stack
-            return solution_stack
+            return solution_stack, node_count
 
         # 7.   else:
         else:
@@ -70,6 +72,8 @@ def get_solution_stack(base_tree):
                 # 8f. enqueue child node
                 queue.add(child_node)
 
+                node_count += 1
+
             # 8g. repeat for right, up, and down
             if not tile_16_pos.is_right_most(4):
                 child_puzzle = node.puzzle.clone()
@@ -79,6 +83,7 @@ def get_solution_stack(base_tree):
                 node.add_child(child_node)
 
                 queue.add(child_node)
+                node_count += 1
 
             if not tile_16_pos.is_top_most():
                 child_puzzle = node.puzzle.clone()
@@ -88,6 +93,7 @@ def get_solution_stack(base_tree):
                 node.add_child(child_node)
 
                 queue.add(child_node)
+                node_count += 1
 
             if not tile_16_pos.is_bottom_most(4):
                 child_puzzle = node.puzzle.clone()
@@ -97,6 +103,7 @@ def get_solution_stack(base_tree):
                 node.add_child(child_node)
 
                 queue.add(child_node)
+                node_count += 1
 
         # endif
     # end while

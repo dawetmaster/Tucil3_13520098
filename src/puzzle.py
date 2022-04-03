@@ -81,6 +81,24 @@ class Puzzle:
         result += "+----+----+----+----+"
         print(result)
 
+    def get_printed_text(self):
+        "Returns printed text"
+
+        result = ""
+        for i in range(4):
+            result += "+----+----+----+----+\n"
+            for j in range(4):
+                result += (
+                    "|"
+                    + (
+                        "{:3d} ".format(self.puzzle[i][j])
+                        if self.puzzle[i][j] != 16 else "    "
+                        )
+                    )
+            result += "|\n"
+        result += "+----+----+----+----+"
+        return result
+
     def print_state(self):
         "Prints steps with last move"
 
