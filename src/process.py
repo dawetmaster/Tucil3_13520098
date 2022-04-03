@@ -158,6 +158,8 @@ def main(pz_array):
             else:
                 # print error
                 print("Error: invalid input")
+        # reset static attribute node_count to zero
+        PuzzleNode.node_count = 0
     else:
         print("Termination message:")
         print("This puzzle is not solvable")
