@@ -47,5 +47,5 @@ class PuzzleNode:
         "Prints puzzle"
 
         self.puzzle.print()
-        print("Parent: " + self.parent)
+        print("Parent: " + str(self.parent))
         print("Children: " + str(self.children))

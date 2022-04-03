@@ -179,7 +179,7 @@ class Puzzle:
         return (pos_16.get_row() + pos_16.get_col()) % 2
 
     def get_solvable_estimate(self):
-        "Returns heuristic cost"
+        "Returns solvable estimate"
 
         return self.count_all_smaller() + self.tile_16_estimate()
 
