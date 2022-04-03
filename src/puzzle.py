@@ -154,6 +154,27 @@ class Puzzle:
         self.steps += 1
         self.last_move = Moves.RIGHT
 
+    def count_smaller(self, number):
+        """
+        Returns number of tiles whose number is smaller than given number
+        that placed after the tile with the given number
+        """
+
+        count = 0
+        # flatten the whole puzzle
+        flat_puzzle = self.puzzle.flatten()
+        # get tile position that have the given number
+        pos = 0
+        while flat_puzzle[pos] != number:
+            pos += 1
+        # count the number of tiles whose number is smaller than given number
+        # that placed after tile with the given number
+        for i in range(pos + 1, len(flat_puzzle)):
+            if flat_puzzle[i] < number:
+                count += 1
+
+        return count
+
     # function count_all_smaller
     # returns number of tiles whose number is smaller than given number
     # process is done traversally from first element to last element

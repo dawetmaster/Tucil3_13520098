@@ -49,3 +49,4 @@ class PuzzleNode:
         self.puzzle.print()
         print("Parent: " + str(self.parent))
         print("Children: " + str(self.children))
+        print("Last move: " + str(self.puzzle.get_last_move()))

@@ -25,7 +25,7 @@ class PuzzlePrioQueue():
         while (
             pz_idx > 0
             and (
-                compare(self.queue[pz_idx], self.queue[pz_idx - 1]) > 0
+                compare(self.queue[pz_idx], self.queue[pz_idx - 1]) < 0
                 )
                 ):
             temp = self.queue[pz_idx - 1]
