@@ -14,8 +14,6 @@ if __name__ == "__main__":
             np_array = menu.load_file(filename)
             # if file is OK
             if np_array is not None:
-                # print numpy array
-                print(np_array)
                 # go to main process
                 process.main(np_array)
         # if input menu is 2

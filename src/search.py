@@ -41,8 +41,6 @@ def get_solution_stack(base_tree):
 
         # node is a valid PuzzleNode object
 
-        print("node_count: " + str(node_count))
-
         # 5.   if the node is solved:
         if node.puzzle.is_solved():
             # 6a. create solution stack
