@@ -77,3 +77,8 @@ class PuzzleNode:
             + "\nLast move: "
             + str(self.puzzle.get_last_move())
             )
+
+    def clone(self):
+        "Clones puzzle"
+
+        return PuzzleNode(self.puzzle.clone(), self.parent, self.children)
